@@ -1,9 +1,9 @@
-import "./style.scss";
+import './style.scss';
 
-const ErrorField = ({textError}) => {
+const ErrorField = ({ textError }) => {
   return (
     <p className="error">
-      {textError}
+      { textError }
     </p>
   );
 }

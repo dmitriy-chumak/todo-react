@@ -1,20 +1,18 @@
-import React, { useState } from "react";
-import ErrorField from "components/ErrorField/ErrorField";
-import "./style.scss";
+import { useState } from 'react';
+import ChangeTaskField from 'components/ChangeTaskField/ChangeTaskField';
+import ErrorField from 'components/ErrorField/ErrorField';
+import './style.scss';
 
-const TaskList = (props) => {
-  const { changeCheckbox, deleteTask, changeTask, task } = props;
+const TaskList = ({ changeCheckbox, deleteTask, changeTask, task }) => {
   const [isCheck, setIsCheck] = useState(task.isCheck);
   const [text, setText] = useState(task.text);
-  const [changedText, setChangedText] = useState("");
-  const [flag, setFlag] = useState(false);
-  const [textError, setTextError] = useState('');
+  const [stateCommponentEdit, setStateCommponentEdit] = useState(false);
+  const [textError, setTextError] = useState("");
 
   const changeIsCheck = async () => {
-    const result = await changeCheckbox(task._id, !isCheck);
+    const err = await changeCheckbox(task._id, !isCheck);
 
-    if (result.message || result !== 200) {
-      setTextError("Error change stage task");
+    if (err) {
       return;
     }
 
@@ -23,80 +21,57 @@ const TaskList = (props) => {
   }
 
   const removeTask = async () => {
-    const result = await deleteTask(task._id);
+    const err = await deleteTask(task._id);
     
-    if (result.message  || result !== 200) {
-      setTextError("Error delete task");
+    if (err) {
       return;
     }
-
-    setTextError("");
   }
 
-  const confirmTask = async () => {
-    const newText = changedText.trim();
+  const confirmTask = async (text) => {
+    const newText = text.trim();
     
     if (newText === "") {
-      setTextError("Please, enter text");
+      setTextError("Invalid value. Please enter text");
       return;
     }
-    const result = await changeTask(task._id, newText);
+    const err = await changeTask(task._id, newText);
 
-    if (result.message  || result !== 200) {
-      setTextError("Error change task info");
+    if (err) {
       return;
     }
 
     setTextError("");
     setText(newText);
-    setFlag(!flag);
+    setStateCommponentEdit(!stateCommponentEdit);
   }
 
   const changeTaskText = () => {
-    setChangedText(text);
-    setFlag(!flag);
+    setTextError("");
+    setStateCommponentEdit(!stateCommponentEdit);
   }
 
-  const propText = {
-    className:"itemList__text text"
-  }
-
-  if (isCheck) {
-    propText.className += " edited";
-  }
-  
   return (
-    <>
-    {flag 
-      ? <div className="taskList">
-          <div className="itemList">
-            <input 
-              type="text" 
-              value={changedText}
-              onChange={e => setChangedText(e.target.value)}
-            />
-            <button className="itemList__button itemList__button_confirm" onClick={confirmTask}></button>
-            <button className="itemList__button itemList__button_cancel" onClick={changeTaskText}></button>
-          </div>
-          <ErrorField textError={textError}/>
+    <div className="taskList">
+    {!stateCommponentEdit 
+      ? <div className="itemList">
+          <input 
+            type="checkbox" 
+            checked={isCheck}
+            onChange={changeIsCheck}
+          />
+          <p className={!isCheck ? "itemList__text" : "itemList__text edited"}>{text}</p>
+          {!isCheck && 
+            <button className="itemList__button itemList__button_edit" onClick={changeTaskText}></button>
+          }
+          <button className="itemList__button itemList__button_delete" onClick={removeTask}></button>
         </div>
-      : <div className="taskList">
-          <div className="itemList">
-            <input 
-              type="checkbox" 
-              checked={isCheck}
-              onChange={changeIsCheck}
-            />
-            <p {...propText}>{text}</p>
-            {!isCheck && 
-              <button className="itemList__button itemList__button_edit" onClick={changeTaskText}></button>
-            }
-            <button className="itemList__button itemList__button_delete" onClick={removeTask}></button>
-          </div>
-          <ErrorField textError={textError}/>
-        </div>
+      : <ChangeTaskField text={text} confirmTask={confirmTask} changeTaskText={changeTaskText}/>
     }
-    </>
+      {textError && 
+        <ErrorField textError={textError} />
+      }
+    </div>
   );
 }
 

@@ -10,16 +10,18 @@
     font-size: 38px;
   }
 
-  &__inputField {
+  &__inputAndButton {
     display: flex;
     flex-direction: row;
     align-items: center;
   }
+
   &__input {
     height: 24px;
     padding: 2px;
     border: none;
   }
+  
   &__button {
     height: 28px;
     width: 70px;

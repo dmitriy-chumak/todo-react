@@ -1,7 +1,7 @@
 import axios from 'axios';
-import url from 'constant';
+import url from 'constants';
 
-const getAllTask = async () => {
+const getAllTasks = async () => {
   const result = await axios.get(url);
   return result;
 }
@@ -26,16 +26,16 @@ const deleteOneTask = async (id) => {
   return result;
 }
 
-const deleteAllTask = async () => {
+const deleteAllTasks = async () => {
   const result = await axios.delete(`${url}`);
   return result;
 }
 
 export {
-  getAllTask,
+  getAllTasks,
   addTask,
   changeCheckboxTask,
   changeText,
   deleteOneTask,
-  deleteAllTask,
+  deleteAllTasks,
 }

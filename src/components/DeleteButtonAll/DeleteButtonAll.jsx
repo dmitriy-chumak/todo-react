@@ -1,9 +1,8 @@
-import React from "react";
-import "./style.scss";
+import './style.scss';
 
-const DeleteButtonAll = ({ deleteAllTasks }) => {
+const DeleteButtonAll = ({ deleteAllTask }) => {
   return (
-    <button className="postTask__button_delete" onClick={deleteAllTasks}>Delete all</button>
+    <button className="button_delete" onClick={deleteAllTask}>Delete all</button>
   );
 }
 

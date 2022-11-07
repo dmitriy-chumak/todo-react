@@ -1,29 +1,32 @@
-import React, { useState } from "react";
-import "./style.scss";
+import { useState } from 'react';
+import ErrorField from 'components/ErrorField/ErrorField';
+import './style.scss';
 
-const PostTask = (props) => {
-  const { create } = props
+const PostTask = ({ createTask }) => {
   const [textInput, setTextInput] = useState("");
+  const [textError, setTextError] = useState("");
 
-  const addNewTask = (e) => {
-    e.preventDefault();
-    const changeText = textInput.trim();
+  const addNewTask = () => {
+    const newText = textInput.trim();
 
-    const newTask = {
-      text: changeText,
-    };
-    const result = create(newTask);
-
-    if (!result) {
-      return
+    if (newText === "") {
+      setTextError("Invalid value. Please enter text");
+      return;
     }
 
+    const newTask = {
+      text: newText,
+    };
+    createTask(newTask);
+
+    setTextError("");
     setTextInput("");
   }
   return (
     <div className="postTask">
       <h1 className="postTask__header">To-Do List</h1>
-      <div className="postTask__inputField">
+      {textError && <ErrorField textError={textError} />}
+      <div className="postTask__inputAndButton">
         <input 
           type="text" 
           className="postTask__input" 
@@ -32,7 +35,7 @@ const PostTask = (props) => {
           placeholder="Enter task"
           onChange={e => setTextInput(e.target.value)}
           />
-        <button className="postTask__button" onClick={addNewTask}>Add</button>
+        <button type="button" className="postTask__button" onClick={addNewTask}>Add</button>
       </div>
     </div>
   );
