@@ -6,26 +6,20 @@ import './style.scss';
 const TaskList = ({ changeCheckbox, deleteTask, changeTask, task }) => {
   const [isCheck, setIsCheck] = useState(task.isCheck);
   const [text, setText] = useState(task.text);
-  const [stateCommponentEdit, setStateCommponentEdit] = useState(false);
+  const [stateComponentEdit, setStateComponentEdit] = useState(false);
   const [textError, setTextError] = useState("");
 
   const changeIsCheck = async () => {
     const err = await changeCheckbox(task._id, !isCheck);
 
-    if (err) {
-      return;
+    if (!err) {
+      setTextError("");
+      setIsCheck(!isCheck);
     }
-
-    setTextError("");
-    setIsCheck(!isCheck);
   }
 
   const removeTask = async () => {
-    const err = await deleteTask(task._id);
-    
-    if (err) {
-      return;
-    }
+    await deleteTask(task._id);
   }
 
   const confirmTask = async (text) => {
@@ -37,23 +31,21 @@ const TaskList = ({ changeCheckbox, deleteTask, changeTask, task }) => {
     }
     const err = await changeTask(task._id, newText);
 
-    if (err) {
-      return;
+    if (!err) {
+      setTextError("");
+      setText(newText);
+      setStateComponentEdit(!stateComponentEdit);
     }
-
-    setTextError("");
-    setText(newText);
-    setStateCommponentEdit(!stateCommponentEdit);
   }
 
-  const changeTaskText = () => {
+  const changeStateComponentEdit = () => {
     setTextError("");
-    setStateCommponentEdit(!stateCommponentEdit);
+    setStateComponentEdit(!stateComponentEdit);
   }
 
   return (
     <div className="taskList">
-    {!stateCommponentEdit 
+    {!stateComponentEdit 
       ? <div className="itemList">
           <input 
             type="checkbox" 
@@ -62,11 +54,25 @@ const TaskList = ({ changeCheckbox, deleteTask, changeTask, task }) => {
           />
           <p className={!isCheck ? "itemList__text" : "itemList__text edited"}>{text}</p>
           {!isCheck && 
-            <button className="itemList__button itemList__button_edit" onClick={changeTaskText}></button>
+            <button 
+              type="button" 
+              className="itemList__button itemList__button_edit" 
+              onClick={changeStateComponentEdit}
+            >
+            </button>
           }
-          <button className="itemList__button itemList__button_delete" onClick={removeTask}></button>
+          <button 
+            type="button" 
+            className="itemList__button itemList__button_delete" 
+            onClick={removeTask}
+          >
+          </button>
         </div>
-      : <ChangeTaskField text={text} confirmTask={confirmTask} changeTaskText={changeTaskText}/>
+      : <ChangeTaskField 
+          text={text} 
+          confirmTask={confirmTask} 
+          changeStateComponentEdit={changeStateComponentEdit}
+        />
     }
       {textError && 
         <ErrorField textError={textError} />

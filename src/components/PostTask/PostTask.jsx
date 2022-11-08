@@ -17,10 +17,12 @@ const PostTask = ({ createTask }) => {
     const newTask = {
       text: newText,
     };
-    createTask(newTask);
-
-    setTextError("");
-    setTextInput("");
+    const err = createTask(newTask);
+    
+    if (!err) {
+      setTextError("");
+      setTextInput("");
+    }
   }
   return (
     <div className="postTask">
@@ -29,13 +31,19 @@ const PostTask = ({ createTask }) => {
       <div className="postTask__inputAndButton">
         <input 
           type="text" 
-          className="postTask__input" 
+          className="postTask__inputAndButton_input" 
           id="input-task"
           value={textInput} 
           placeholder="Enter task"
           onChange={e => setTextInput(e.target.value)}
-          />
-        <button type="button" className="postTask__button" onClick={addNewTask}>Add</button>
+        />
+        <button 
+          type="button" 
+          className="postTask__inputAndButton_button" 
+          onClick={addNewTask}
+        >
+          Add
+        </button>
       </div>
     </div>
   );

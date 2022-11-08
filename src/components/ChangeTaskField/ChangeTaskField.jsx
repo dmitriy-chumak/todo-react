@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const ChangeTaskField = ({ text, confirmTask, changeTaskText }) => {
+const ChangeTaskField = ({ text, confirmTask, changeStateComponentEdit }) => {
   const [changedText, setChangedText] = useState(text);
 
   return (
@@ -10,8 +10,18 @@ const ChangeTaskField = ({ text, confirmTask, changeTaskText }) => {
         value={changedText}
         onChange={e => setChangedText(e.target.value)}
       />
-      <button className="itemList__button itemList__button_confirm" onClick={() => confirmTask(changedText)}></button>
-      <button className="itemList__button itemList__button_cancel" onClick={changeTaskText}></button>
+      <button 
+        type="button"
+        className="itemList__button itemList__button_confirm" 
+        onClick={() => confirmTask(changedText)}
+      >
+      </button>
+      <button 
+        type="button"
+        className="itemList__button itemList__button_cancel" 
+        onClick={changeStateComponentEdit}
+      >
+      </button>
     </div>
   );
 }

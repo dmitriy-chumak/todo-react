@@ -3,7 +3,7 @@ import './style.scss';
 const ErrorField = ({ textError }) => {
   return (
     <p className="error">
-      { textError }
+      {textError}
     </p>
   );
 }

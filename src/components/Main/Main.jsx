@@ -40,6 +40,7 @@ const Main = () => {
       setErrorText("");
     } catch (error) {
       setErrorText("Error create tasks");
+      return true;
     }
   };
 
@@ -48,14 +49,14 @@ const Main = () => {
       const result = await deleteOneTask(id);
 
       if (result.data.deletedCount !== 1) {
-        throw new Error();
+        setErrorText("Error delete, please reload page.");
+        return;
       }
 
-      setAllTasks(allTasks.filter(item => item._id !== id));
-
+      const filtredTasks = allTasks.filter(item => item._id !== id)
+      setAllTasks(filtredTasks);
     } catch (error) {
-      setErrorText("Error delete task")
-      return error.message;
+      setErrorText("Error delete task");
     }
   };
 
@@ -64,7 +65,8 @@ const Main = () => {
       const result = await deleteAllTasks();
       
       if (result.data.deletedCount !== allTasks.length) {
-        throw new Error();
+        setErrorText("Error delete all tasks. Reload page");
+        return;
       }
   
       setAllTasks([]);
@@ -79,17 +81,16 @@ const Main = () => {
       const result = await changeCheckboxTask(id, check);
 
       if (!result.data._id === id) {
-        throw new Error();
+        setErrorText("Error change stage. Reload page");
+        return true;
       }
   
-      let changeTask = allTasks.find(element => { return element._id === result.data._id });
+      let changeTask = allTasks.find(element => element._id === result.data._id);
       changeTask.isCheck = result.data.isCheck;
-      
       setAllTasks(sortTask(allTasks));
-
     } catch (error) {
       setErrorText("Error change stage task")
-      return error.message;
+      return true;
     }
   };
 
@@ -98,7 +99,8 @@ const Main = () => {
       const result = await changeText(id, text);
 
       if (result.data._id !== id) {
-        throw new Error();
+        setErrorText("Error change text. Reload page");
+        return true;
       }
   
       const changedTask = allTasks.find(element => { return element._id === result.data._id });
@@ -106,7 +108,7 @@ const Main = () => {
 
     } catch (error) {
       setErrorText("Error change task text")
-      return error.message;
+      return true;
     }
   }
 
