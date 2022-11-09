@@ -16,7 +16,7 @@ import "./style.scss";
 
 const Main = () => {
   const [allTasks, setAllTasks] = useState([]);
-  const [errorText, setErrorText] = useState("");
+  const [textError, setTextError] = useState("");
 
   useEffect(() => {
     getTasks();
@@ -26,9 +26,9 @@ const Main = () => {
     try {
       const result = await getAllTasks();
       setAllTasks(result.data);
-      setErrorText("");
+      setTextError("");
     } catch (error) {
-      setErrorText("Error get tasks")
+      setTextError("Error get tasks");
     }
   };
 
@@ -37,9 +37,9 @@ const Main = () => {
       const result = await addTask(text);
 
       setAllTasks([result.data, ...allTasks]);
-      setErrorText("");
+      setTextError("");
     } catch (error) {
-      setErrorText("Error create tasks");
+      setTextError("Error create tasks");
       return true;
     }
   };
@@ -49,14 +49,14 @@ const Main = () => {
       const result = await deleteOneTask(id);
 
       if (result.data.deletedCount !== 1) {
-        setErrorText("Error delete, please reload page.");
+        setTextError("Error delete, please reload page.");
         return;
       }
 
       const filtredTasks = allTasks.filter(item => item._id !== id)
       setAllTasks(filtredTasks);
     } catch (error) {
-      setErrorText("Error delete task");
+      setTextError("Error delete task");
     }
   };
 
@@ -65,14 +65,14 @@ const Main = () => {
       const result = await deleteAllTasks();
       
       if (result.data.deletedCount !== allTasks.length) {
-        setErrorText("Error delete all tasks. Reload page");
+        setTextError("Error delete all tasks. Reload page");
         return;
       }
   
       setAllTasks([]);
-      setErrorText("");
+      setTextError("");
     } catch (error) {
-      setErrorText("Error delete all task on server");
+      setTextError("Error delete all task on server");
     }
   };
 
@@ -81,7 +81,7 @@ const Main = () => {
       const result = await changeCheckboxTask(id, check);
 
       if (!result.data._id === id) {
-        setErrorText("Error change stage. Reload page");
+        setTextError("Error change stage. Reload page");
         return true;
       }
   
@@ -89,7 +89,7 @@ const Main = () => {
       changeTask.isCheck = result.data.isCheck;
       setAllTasks(sortTask(allTasks));
     } catch (error) {
-      setErrorText("Error change stage task")
+      setTextError("Error change stage task")
       return true;
     }
   };
@@ -99,7 +99,7 @@ const Main = () => {
       const result = await changeText(id, text);
 
       if (result.data._id !== id) {
-        setErrorText("Error change text. Reload page");
+        setTextError("Error change text. Reload page");
         return true;
       }
   
@@ -107,7 +107,7 @@ const Main = () => {
       changedTask.text = result.data.text;
 
     } catch (error) {
-      setErrorText("Error change task text")
+      setTextError("Error change task text")
       return true;
     }
   }
@@ -118,8 +118,8 @@ const Main = () => {
         <DeleteButtonAll deleteAllTask={deleteAllTask} />
         <PostTask createTask={createTask} />
       </div>
-      {errorText &&
-        <ErrorField errorText={errorText} />
+      {textError &&
+        <ErrorField textError={textError} />
       }
       {
         allTasks.map(element => {
