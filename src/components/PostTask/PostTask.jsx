@@ -6,7 +6,7 @@ const PostTask = ({ createTask }) => {
   const [textInput, setTextInput] = useState("");
   const [textError, setTextError] = useState("");
 
-  const addNewTask = () => {
+  const addNewTask = async () => {
     const newText = textInput.trim();
 
     if (newText === "") {
@@ -17,7 +17,7 @@ const PostTask = ({ createTask }) => {
     const newTask = {
       text: newText,
     };
-    const err = createTask(newTask);
+    const err = await createTask(newTask);
     
     if (!err) {
       setTextError("");

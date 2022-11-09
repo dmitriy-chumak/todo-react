@@ -12,7 +12,7 @@ const addTask = async (text) => {
 }
 
 const changeCheckboxTask = async (id, isCheck) => {
-  const result = await axios.patch(`${url}/isCheck/${id}`, { isCheck });
+  const result = await axios.patch(`${url}/ischeck/${id}`, { isCheck });
   return result;
 }
 

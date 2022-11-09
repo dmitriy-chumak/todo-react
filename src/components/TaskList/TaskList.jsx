@@ -4,22 +4,16 @@ import ErrorField from 'components/ErrorField/ErrorField';
 import './style.scss';
 
 const TaskList = ({ changeCheckbox, deleteTask, changeTask, task }) => {
-  const [isCheck, setIsCheck] = useState(task.isCheck);
   const [text, setText] = useState(task.text);
   const [stateComponentEdit, setStateComponentEdit] = useState(false);
   const [textError, setTextError] = useState("");
 
-  const changeIsCheck = async () => {
-    const err = await changeCheckbox(task._id, !isCheck);
+  const changeIsCheck = async (check) => {
+    const err = await changeCheckbox(task._id, check);
 
     if (!err) {
       setTextError("");
-      setIsCheck(!isCheck);
     }
-  }
-
-  const removeTask = async () => {
-    await deleteTask(task._id);
   }
 
   const confirmTask = async (text) => {
@@ -46,25 +40,25 @@ const TaskList = ({ changeCheckbox, deleteTask, changeTask, task }) => {
   return (
     <div className="taskList">
     {!stateComponentEdit 
-      ? <div className="itemList">
+      ? <div className="task">
           <input 
             type="checkbox" 
-            checked={isCheck}
-            onChange={changeIsCheck}
+            checked={task.isCheck}
+            onChange={(e) => changeIsCheck(e.target.checked)}
           />
-          <p className={!isCheck ? "itemList__text" : "itemList__text edited"}>{text}</p>
-          {!isCheck && 
+          <p className={!task.isCheck ? "task__text" : "task__text edited"}>{text}</p>
+          {!task.isCheck && 
             <button 
               type="button" 
-              className="itemList__button itemList__button_edit" 
+              className="task__button task__button_edit" 
               onClick={changeStateComponentEdit}
             >
             </button>
           }
           <button 
             type="button" 
-            className="itemList__button itemList__button_delete" 
-            onClick={removeTask}
+            className="task__button task__button_delete" 
+            onClick={() => deleteTask(task._id)}
           >
           </button>
         </div>

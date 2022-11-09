@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import './style.scss'
 
 const ChangeTaskField = ({ text, confirmTask, changeStateComponentEdit }) => {
   const [changedText, setChangedText] = useState(text);
 
   return (
-    <div className="itemList">
+    <div className="changeTask">
       <input 
         type="text" 
         value={changedText}
@@ -12,13 +13,13 @@ const ChangeTaskField = ({ text, confirmTask, changeStateComponentEdit }) => {
       />
       <button 
         type="button"
-        className="itemList__button itemList__button_confirm" 
+        className="changeTask__button changeTask__button_confirm" 
         onClick={() => confirmTask(changedText)}
       >
       </button>
       <button 
         type="button"
-        className="itemList__button itemList__button_cancel" 
+        className="changeTask__button changeTask__button_cancel" 
         onClick={changeStateComponentEdit}
       >
       </button>

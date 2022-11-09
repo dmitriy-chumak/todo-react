@@ -79,36 +79,23 @@ const Main = () => {
   const changeCheckbox = async (id, check) => {
     try {
       const result = await changeCheckboxTask(id, check);
-
-      if (!result.data._id === id) {
-        setTextError("Error change stage. Reload page");
-        return true;
-      }
-  
-      let changeTask = allTasks.find(element => element._id === result.data._id);
+      const changeTask = allTasks.find(element => element._id === result.data._id);
       changeTask.isCheck = result.data.isCheck;
       setAllTasks(sortTask(allTasks));
     } catch (error) {
       setTextError("Error change stage task")
-      return true;
+      return error.message;
     }
   };
 
   const changeTask = async (id, text) => {
     try {
       const result = await changeText(id, text);
-
-      if (result.data._id !== id) {
-        setTextError("Error change text. Reload page");
-        return true;
-      }
-  
-      const changedTask = allTasks.find(element => { return element._id === result.data._id });
+      const changedTask = allTasks.find(element => element._id === result.data._id);
       changedTask.text = result.data.text;
-
     } catch (error) {
       setTextError("Error change task text")
-      return true;
+      return error.message;
     }
   }
 
@@ -122,17 +109,15 @@ const Main = () => {
         <ErrorField textError={textError} />
       }
       {
-        allTasks.map(element => {
-          return (
-            <TaskList 
-              task={element} 
-              changeCheckbox={changeCheckbox} 
-              deleteTask={deleteTask} 
-              changeTask={changeTask}
-              key={element._id}
-            />
-          );
-        })
+        allTasks.map(element => 
+          <TaskList 
+            task={element} 
+            changeCheckbox={changeCheckbox} 
+            deleteTask={deleteTask} 
+            changeTask={changeTask}
+            key={element._id}
+          />
+        )
       }
     </div>
   );
