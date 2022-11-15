@@ -1,0 +1,26 @@
+.changeTask {
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+  background-color: wheat;
+  height: 30px;
+  padding: 10px;
+  justify-content: center;
+  border-radius: 50px;
+
+  &__button {
+    height: 30px;
+    width: 30px;
+    border: none;
+    background-color: transparent;
+    margin-left: 15px;
+
+    &_confirm {
+      background-image: url("/image/check.svg");
+    }
+
+    &_cancel {
+      background-image: url("/image/times.svg");
+    }
+  }
+}

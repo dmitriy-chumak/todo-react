@@ -1,1 +1,1 @@
-# todo-react
+"npm start" to run project

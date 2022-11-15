@@ -1,0 +1,34 @@
+.formAddTask {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__header {
+    align-self: flex-start;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    font-size: 38px;
+  }
+
+  &__inputAndButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &_input {
+      height: 24px;
+      padding: 2px;
+      border: none;
+    }
+
+    &_button {
+      height: 28px;
+      width: 70px;
+      border-top-right-radius: 50px;
+      border-bottom-right-radius: 50px;
+      border-color: transparent;
+      background-color: wheat;
+      cursor: pointer;
+    }
+  }
+}
