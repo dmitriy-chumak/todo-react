@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import DeleteButtonAll from 'components/DeleteButtonAll/DeleteButtonAll';
 import FormAddTask from 'components/FormAddTask/FormAddTask';
-import FormOneTask from 'components/FormOneTask/FormOneTask';
+import Task from 'components/Task/Task';
 import ErrorField from 'components/ErrorField/ErrorField';
 import { 
   getAllTasks, 
@@ -119,7 +119,7 @@ const Main = () => {
       }
       {
         allTasks.map(task => 
-          <FormOneTask 
+          <Task 
             task={task} 
             changeCheckStatus={changeCheckStatus} 
             deleteTask={deleteTask} 

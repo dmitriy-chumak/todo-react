@@ -26,13 +26,13 @@ const FormAddTask = ({ createTask }) => {
   }
   
   return (
-    <div className="postTask">
-      <h1 className="postTask__header">To-Do List</h1>
+    <div className="formAddTask">
+      <h1 className="formAddTask__header">To-Do List</h1>
       {textError && <ErrorField textError={textError} />}
-      <div className="postTask__inputAndButton">
+      <div className="formAddTask__inputAndButton">
         <input 
           type="text" 
-          className="postTask__inputAndButton_input" 
+          className="formAddTask__inputAndButton_input" 
           id="input-task"
           value={textInput} 
           placeholder="Enter task"
@@ -40,7 +40,7 @@ const FormAddTask = ({ createTask }) => {
         />
         <button 
           type="button" 
-          className="postTask__inputAndButton_button" 
+          className="formAddTask__inputAndButton_button" 
           onClick={addNewTask}
         >
           Add

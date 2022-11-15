@@ -3,7 +3,7 @@ import FormChangeTask from 'components/FormChangeTask/FormChangeTask';
 import ErrorField from 'components/ErrorField/ErrorField';
 import './style.scss';
 
-const FormOneTask = ({ changeCheckbox, deleteTask, changeTask, task }) => {
+const Task = ({ changeCheckbox, deleteTask, changeTask, task }) => {
   const [stateComponentEdit, setStateComponentEdit] = useState(false);
   const [textError, setTextError] = useState("");
 
@@ -36,7 +36,7 @@ const FormOneTask = ({ changeCheckbox, deleteTask, changeTask, task }) => {
   }
 
   return (
-    <div className="taskList">
+    <div className="tasks">
     {!stateComponentEdit 
       ? <div className="task">
           <input 
@@ -73,4 +73,4 @@ const FormOneTask = ({ changeCheckbox, deleteTask, changeTask, task }) => {
   );
 }
 
-export default FormOneTask;
+export default Task;
