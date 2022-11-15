@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import DeleteButtonAll from 'components/DeleteButtonAll/DeleteButtonAll';
-import PostTask from 'components/PostTask/PostTask';
-import TaskList from 'components/TaskList/TaskList';
+import FormAddTask from 'components/FormAddTask/FormAddTask';
+import FormOneTask from 'components/FormOneTask/FormOneTask';
 import ErrorField from 'components/ErrorField/ErrorField';
 import { 
   getAllTasks, 
   addTask, 
   deleteOneTask, 
   deleteAllTasks, 
-  changeCheckboxTask, 
+  changeCheckStatusTask, 
   changeText 
 } from "services/task-services";
 import sortTask from "helpers/sort";
@@ -76,12 +76,17 @@ const Main = () => {
     }
   };
 
-  const changeCheckbox = async (id, check) => {
+  const changeCheckStatus = async (id, check) => {
     try {
-      const result = await changeCheckboxTask(id, check);
+      const result = await changeCheckStatusTask(id, check);
+
       const changeTask = allTasks.find(element => element._id === result.data._id);
-      changeTask.isCheck = result.data.isCheck;
-      setAllTasks(sortTask(allTasks));
+
+      if (changeTask) {
+        changeTask.isCheck = result.data.isCheck;
+        setAllTasks(sortTask(allTasks));
+      }
+
     } catch (error) {
       setTextError("Error change stage task")
       return error.message;
@@ -91,8 +96,12 @@ const Main = () => {
   const changeTask = async (id, text) => {
     try {
       const result = await changeText(id, text);
+
       const changedTask = allTasks.find(element => element._id === result.data._id);
-      changedTask.text = result.data.text;
+
+      if (changedTask) {
+        changedTask.text = result.data.text;
+      }
     } catch (error) {
       setTextError("Error change task text")
       return error.message;
@@ -103,19 +112,19 @@ const Main = () => {
     <div className="main">
       <div className="main__header">      
         <DeleteButtonAll deleteAllTask={deleteAllTask} />
-        <PostTask createTask={createTask} />
+        <FormAddTask createTask={createTask} />
       </div>
       {textError &&
         <ErrorField textError={textError} />
       }
       {
-        allTasks.map(element => 
-          <TaskList 
-            task={element} 
-            changeCheckbox={changeCheckbox} 
+        allTasks.map(task => 
+          <FormOneTask 
+            task={task} 
+            changeCheckStatus={changeCheckStatus} 
             deleteTask={deleteTask} 
             changeTask={changeTask}
-            key={element._id}
+            key={task._id}
           />
         )
       }

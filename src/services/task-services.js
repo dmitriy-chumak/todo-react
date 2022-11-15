@@ -11,7 +11,7 @@ const addTask = async (text) => {
   return result;
 }
 
-const changeCheckboxTask = async (id, isCheck) => {
+const changeCheckStatusTask = async (id, isCheck) => {
   const result = await axios.patch(`${url}/ischeck/${id}`, { isCheck });
   return result;
 }
@@ -34,7 +34,7 @@ const deleteAllTasks = async () => {
 export {
   getAllTasks,
   addTask,
-  changeCheckboxTask,
+  changeCheckStatusTask,
   changeText,
   deleteOneTask,
   deleteAllTasks,

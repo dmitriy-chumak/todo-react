@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ErrorField from 'components/ErrorField/ErrorField';
 import './style.scss';
 
-const PostTask = ({ createTask }) => {
+const FormAddTask = ({ createTask }) => {
   const [textInput, setTextInput] = useState("");
   const [textError, setTextError] = useState("");
 
@@ -24,6 +24,7 @@ const PostTask = ({ createTask }) => {
       setTextInput("");
     }
   }
+  
   return (
     <div className="postTask">
       <h1 className="postTask__header">To-Do List</h1>
@@ -49,4 +50,4 @@ const PostTask = ({ createTask }) => {
   );
 }
 
-export default PostTask;
+export default FormAddTask;

@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import ChangeTaskField from 'components/ChangeTaskField/ChangeTaskField';
+import FormChangeTask from 'components/FormChangeTask/FormChangeTask';
 import ErrorField from 'components/ErrorField/ErrorField';
 import './style.scss';
 
-const TaskList = ({ changeCheckbox, deleteTask, changeTask, task }) => {
-  const [text, setText] = useState(task.text);
+const FormOneTask = ({ changeCheckbox, deleteTask, changeTask, task }) => {
   const [stateComponentEdit, setStateComponentEdit] = useState(false);
   const [textError, setTextError] = useState("");
 
@@ -27,7 +26,6 @@ const TaskList = ({ changeCheckbox, deleteTask, changeTask, task }) => {
 
     if (!err) {
       setTextError("");
-      setText(newText);
       setStateComponentEdit(!stateComponentEdit);
     }
   }
@@ -46,7 +44,7 @@ const TaskList = ({ changeCheckbox, deleteTask, changeTask, task }) => {
             checked={task.isCheck}
             onChange={(e) => changeIsCheck(e.target.checked)}
           />
-          <p className={!task.isCheck ? "task__text" : "task__text edited"}>{text}</p>
+          <p className={!task.isCheck ? "task__text" : "task__text edited"}>{task.text}</p>
           {!task.isCheck && 
             <button 
               type="button" 
@@ -62,8 +60,8 @@ const TaskList = ({ changeCheckbox, deleteTask, changeTask, task }) => {
           >
           </button>
         </div>
-      : <ChangeTaskField 
-          text={text} 
+      : <FormChangeTask 
+          text={task.text} 
           confirmTask={confirmTask} 
           changeStateComponentEdit={changeStateComponentEdit}
         />
@@ -75,4 +73,4 @@ const TaskList = ({ changeCheckbox, deleteTask, changeTask, task }) => {
   );
 }
 
-export default TaskList;
+export default FormOneTask;

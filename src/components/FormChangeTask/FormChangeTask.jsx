@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './style.scss'
 
-const ChangeTaskField = ({ text, confirmTask, changeStateComponentEdit }) => {
+const FormChangeTask = ({ text, confirmTask, changeStateComponentEdit }) => {
   const [changedText, setChangedText] = useState(text);
 
   return (
@@ -27,4 +27,4 @@ const ChangeTaskField = ({ text, confirmTask, changeStateComponentEdit }) => {
   );
 }
 
-export default ChangeTaskField;
+export default FormChangeTask;
