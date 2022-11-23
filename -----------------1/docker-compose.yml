@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  db: 
+    image: postgres:14
+    volumes:
+    - ./:/var/lib/postgresql/data
+    ports:
+    - "5432:5432"
+    environment:
+    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    - POSTGRES_USER=${POSTGRES_USER}
+    - POSTGRES_DB=${DB_NAME}
+    
+
+      
+  api:
+    build:
+      context: .
+    container_name: labDocker
+    working_dir: /app
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    # environment:
+    # - POSTGRES_PASSWORD=root
+    # - POSTGRES_USER=postgres
+    #image: postgres:15.1
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      

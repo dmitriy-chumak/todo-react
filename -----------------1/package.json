@@ -1,0 +1,29 @@
+{
+  "name": "node_lab_1",
+  "version": "1.0.0",
+  "description": "helloworld",
+  "main": "main.js",
+  "scripts": {
+    "start": "node ./src/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Neke1488/Lab1-Node.js.git"
+  },
+  "keywords": [
+    "gg"
+  ],
+  "author": "Nikita",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "pg": "^8.8.0"
+  },
+  "bugs": {
+    "url": "https://github.com/Neke1488/Lab1-Node.js/issues"
+  },
+  "homepage": "https://github.com/Neke1488/Lab1-Node.js#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
